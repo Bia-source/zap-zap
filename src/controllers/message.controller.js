@@ -1,9 +1,11 @@
 import { MessageEntity } from "../entities/Message.entity.js";
+import { UserEntity } from "../entities/User.entity.js";
 
 const createMessage = async (req, res) => {
-    const { message } = req.body;
+    await MessageEntity.sync();
+    const { message, senderId, receiverId } = req.body;
     const newMessage = await MessageEntity.create({
-        message
+        message, senderId, receiverId
     });
     res
     .status(201)
@@ -48,4 +50,34 @@ const deleteMessage = async (req, res) => {
     })
 }
 
-export { createMessage, getAllMessages, getMessageById, updateMessage, deleteMessage }
+// REGRA DE NEGOCIO
+// Somente quem enviou a mensagem pode favoritar sua mensagem 
+const updateFavotiteMessage = async (req,res) => {
+    try {
+        const { idMessage, idUser } = req.params;
+        const message = await MessageEntity.findByPk(idMessage);
+        let statusFavorite;
+
+        // if ternario
+        // condicao               // chave depois do if   // else
+        (message.favorite === false) ? statusFavorite = true : statusFavorite = false;
+        // if(message.favorite === false){
+        //     statusFavorite = true
+        // }else{
+        //     statusFavorite = false
+        // }
+        await MessageEntity.update({favorite: statusFavorite}, {
+            where: {
+                id,
+                senderId: idUser
+            }
+        });
+        const messageUpdate = await MessageEntity.findByPk(id);
+        console.log("lala")
+        return res.json({messageUpdate});
+    } catch (error) {
+        res.json({message: error});
+    }
+}
+
+export { createMessage, getAllMessages, getMessageById, updateMessage, deleteMessage, updateFavotiteMessage }

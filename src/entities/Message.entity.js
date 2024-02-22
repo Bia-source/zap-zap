@@ -10,17 +10,20 @@ const MessageEntity = database.define('Message', {
     },
     senderId:{
         type: DataTypes.UUID,
-        allowNull: false,
-        defaultValue: Sequelize.UUIDV4,
+        allowNull: false
     },
     receiverId:{
         type: DataTypes.UUID,
-        allowNull: false,
-        defaultValue: Sequelize.UUIDV4,
+        allowNull: false
     },
     message: {
         type:DataTypes.STRING,
         allowNull: false
+    },
+    favorite: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 });
 

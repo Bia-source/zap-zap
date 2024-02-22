@@ -4,7 +4,8 @@ import {
     getAllMessages,
     getMessageById,
     updateMessage,
-    deleteMessage
+    deleteMessage,
+    updateFavotiteMessage
  } from "../controllers/message.controller.js";
 
 const messageRoute = Router();
@@ -18,5 +19,7 @@ messageRoute.get("/message-find-id/:id", getMessageById)
 messageRoute.patch("/message-update/:id", updateMessage);
 
 messageRoute.delete("/delete-message/:id", deleteMessage);
+
+messageRoute.patch("/update-favorite/:idMessage/:idUser", updateFavotiteMessage);
 
 export { messageRoute }
