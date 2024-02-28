@@ -1,5 +1,4 @@
 import { MessageEntity } from "../entities/Message.entity.js";
-import { UserEntity } from "../entities/User.entity.js";
 
 const createMessage = async (req, res) => {
     await MessageEntity.sync();
@@ -55,26 +54,18 @@ const deleteMessage = async (req, res) => {
 const updateFavotiteMessage = async (req,res) => {
     try {
         const { idMessage, idUser } = req.params;
-        const message = await MessageEntity.findByPk(idMessage);
-        let statusFavorite;
+    let statusFavorite;
 
-        // if ternario
-        // condicao               // chave depois do if   // else
-        (message.favorite === false) ? statusFavorite = true : statusFavorite = false;
-        // if(message.favorite === false){
-        //     statusFavorite = true
-        // }else{
-        //     statusFavorite = false
-        // }
-        await MessageEntity.update({favorite: statusFavorite}, {
-            where: {
-                id,
-                senderId: idUser
-            }
-        });
-        const messageUpdate = await MessageEntity.findByPk(id);
-        console.log("lala")
-        return res.json({messageUpdate});
+    const message = await MessageEntity.findByPk(idMessage);
+
+    (message.favorite === false) ? statusFavorite = true : statusFavorite = false;
+    
+    await MessageEntity.update({favorite: statusFavorite},{
+        where: {
+            id: idMessage,
+            senderId: idUser
+        }
+    });
     } catch (error) {
         res.json({message: error});
     }
