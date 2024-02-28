@@ -1,36 +1,18 @@
 import { UserEntity } from "../entities/User.entity.js";
+import { UserService } from "../services/user.service.js";
 import { ERRORS, SUCCESS } from "../shared/messages.js";
 
+const instanceServiceUser = new UserService();
 
 const createUser = async (req, res) => {
-    try {
-        await UserEntity.sync();
-        const { name, email, password } = req.body;
-        const userAlreadyExist = await UserEntity.findOne({
-            where: {
-                name,
-                email
-            }
+    const { name, email, password } = req.body;
+    const newUser = await instanceServiceUser.createUserService(name, email, password);
+    res
+        .status(201)
+        .json({
+            message: "Usuário criado com sucesso!",
+            newUser
         });
-
-        // erro personalizado
-        if (userAlreadyExist) {
-            return res.json({ message: `Usuario ${ERRORS.ALREADY_EXIST}` });
-        }
-
-        const newUser = await UserEntity.create({
-            name, email, password
-        });
-        res
-            .status(201)
-            .json({
-                message: "Usuário criado com sucesso!",
-                newUser
-            });
-    } catch (error) {
-        res.status(400).json({message: error})
-    }
-
 }
 
 const getAllUsers = async (req, res) => {
