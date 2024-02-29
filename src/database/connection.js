@@ -10,6 +10,7 @@ const testConneciton = async () => {
         await sequelize.authenticate();
         console.log("Connection has been established successfully.");
     } catch (error){
+        console.log("teste!")
         console.log("Conexão mal sucessida!")
     }
 }
