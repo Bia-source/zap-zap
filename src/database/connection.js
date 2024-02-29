@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize('zapzap', 'root', 'root', {
-    host: 'https://zap-zap-k6qo.onrender.com',
+    host: 'localhost',
     dialect: 'mysql'
 });
 
