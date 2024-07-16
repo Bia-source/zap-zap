@@ -1,6 +1,6 @@
 import { User } from "../models/User.model.js";
 
-let listUser = [];
+export let listUser = [];
 
 // CRUD
 export const createUser = (username, phone) => {
@@ -39,3 +39,6 @@ export const updateStatus = (id) => {
 //         return true
 //     }
 // }
+
+// Delete de usuario
+// obs: o unico usuario que pode deletar sua conta é seu criador
