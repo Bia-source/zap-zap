@@ -42,3 +42,14 @@ export const updateStatus = (id) => {
 
 // Delete de usuario
 // obs: o unico usuario que pode deletar sua conta é seu criador
+
+export const deleteUser = (idUser) => {
+   const userAlreadyExist = listUser.find(user => user.id == idUser)
+
+    if(userAlreadyExist){
+        let indexUser = listUser.findIndex(user => user.id == idUser)
+        listUser.splice(indexUser,1)
+    } else {
+        return "não é possível apagar este usuario"
+    }
+}

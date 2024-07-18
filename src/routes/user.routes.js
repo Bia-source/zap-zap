@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUser, getAllUsers, updateStatus } from "../controllers/user.controller.js";
+import { createUser, deleteUser, getAllUsers, updateStatus } from "../controllers/user.controller.js";
 
 const userRouter = Router();
 
@@ -18,6 +18,12 @@ userRouter.patch("/user/:id", (req,res)=> {
     const { id } = req.params;
     const updateUser = updateStatus(id);
     res.status(200).json({updateUser});
+});
+
+userRouter.delete("/message/:id", (req, res) => {
+    const { id } = req.params
+    const deleteAlreadyUser = deleteUser(id)
+    res.status(200).json({deleteAlreadyUser})
 });
 
 export { userRouter }

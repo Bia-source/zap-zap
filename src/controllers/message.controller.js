@@ -41,7 +41,32 @@ export const updateFavoriteMessage = (id) => {
     }
 }
 
+export const updateBodyMessage = (id, text, idSender) => {
+    const messageAlreadyExist = listMessages.find(message => message.id == id);
+
+    // verificando se a mensagem realmente existe no banco de dados
+    if(messageAlreadyExist){
+        let indexMessage = listMessages.findIndex(message => message.id == id);
+        listMessages[indexMessage].changeBodyMessage(text, idSender);
+        return listMessages[indexMessage];
+    }else{
+        return "Nao existe uma mensagem com este id"
+    }
+}
+
 
 // Delete de mensagem
 // obs: o unico usuario que pode deletar uma mensagem é seu criador
+
+export const deleteMessage = (idMessage, idUser) => {
+    const messageAlreadyExist = listMessages.find(message => message.id == idMessage);
+    const userSender = listMessages.find(message => message.user_sender_id == idUser)
+
+    if(messageAlreadyExist && userSender){
+        let indexMessage = listMessages.findIndex(message => message.id == idMessage)
+        listMessages.splice(indexMessage,1)
+    } else {
+        return "não é possível apagar essa mensagem"
+    }
+}
 
