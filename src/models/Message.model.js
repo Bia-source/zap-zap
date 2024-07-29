@@ -18,8 +18,8 @@ export class Messages{
     changeBodyMessage(text, idSender){
         // verificando se a pessoa que esta solicitando
         // a edicao da mensagem foi seu criador
-        let diference = new Date().getMinutes() - this.created_at.getMinutes();
-        if(idSender === this.user_sender_id && diference <= 15){
+        let diference = new Date(new Date() - this.created_at)
+        if(idSender === this.user_sender_id && diference.getMinutes() <= 15){
             this.body = text;
             this.updated_at = new Date();
          }else{
