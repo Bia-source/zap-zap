@@ -6,42 +6,24 @@ export let listUser = [];
 // CRUD
 export const createUser = (username, phone) => {
     const newUser = new User(username, phone);
-    // db.serialize(()=> {
-    //     deleteTableUser()
-    //     createTableUser()
-    // })
-    //db.run(`SHOW TABLES;`);
     db.run(`INSERT INTO "users" (id,username,phone,statusOn,created_at) VALUES (?,?,?,?,?)
         `, [newUser.id, newUser.username, newUser.phone, newUser.statusOn, newUser.created_at], (error) => {
             if(error){
                 console.log(error)
             }
         });
-        // db.run(`INSERT INTO "users" (id,username,phone,statusOn,created_at) VALUES (
-        //     ${newUser.id},
-        //     ${newUser.username},
-        //     ${newUser.phone},
-        //     ${newUser.statusOn},
-        //     ${newUser.created_at})
-        //     `, (error) => {
-        //         if(error){
-        //             console.log(error)
-        //         }
-        //     })
-    // //listUser.push(newUser);
+    //listUser.push(newUser);
     return newUser;
 }
 
-export const getAllUsers = () => {
-    
-    const results = db.get(`SELECT * FROM "users";`, [], (error, rows) => {
+export const getAllUsers = (res) => {
+    db.all(`SELECT * FROM "users";`, [], (error, rows) => {
         if(error){
-            console.log(error)
+            console.log(error);
         }
-        return rows;
+        //console.log(rows)
+        return res.json({rows});
     });
-    console.log(results)
-    return results;
 }
 
 export const updateStatus = (id) => {

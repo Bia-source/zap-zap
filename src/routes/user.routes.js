@@ -10,8 +10,7 @@ userRouter.post("/user", (req,res)=> {
 });
 
 userRouter.get("/user", (req,res)=> {
-    const listUser = getAllUsers();
-    res.status(200).json({listUser});
+    getAllUsers(res);
 });
 
 userRouter.patch("/user/:id", (req,res)=> {
